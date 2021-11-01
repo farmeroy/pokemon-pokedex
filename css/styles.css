@@ -1,5 +1,6 @@
 * {
     box-sizing: border-box;
+    margin:0;
 }
 
 body {
@@ -9,6 +10,12 @@ body {
 
 .pokemon__name {
     font-size: 2rem;
+    text-align: center;
+    margin: 1rem;
+    padding:1rem;
+    border: 1px solid black;
+    border-radius: 8px;
+
 }
 
 .pokemon__comment {
