@@ -6,6 +6,7 @@
 body {
     margin: 20px 10px;
     font-family:sans-serif;
+    background-color: aliceblue;
 }
 
 .app__header {
@@ -17,11 +18,13 @@ body {
 
 .pokemon {
     text-align: center;
-    margin: 1rem 0 0;
+    margin: 1rem auto;
     padding: 1rem;
+    background-color: white;
     border: 1px solid black;
     border-radius: 8px;
     box-shadow: 10px 5px 5px rgba(0,0,0,.4);
+    max-width: 90%;
 }
 
 
@@ -33,6 +36,5 @@ body {
 @media screen and (min-width: 600px) {
     .pokemon {
         max-width:400px;
-        margin: 1rem auto;
     }
 }
