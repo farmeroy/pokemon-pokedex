@@ -20,5 +20,7 @@ pokemonList = [
 
 
 for (let i=0; i<pokemonList.length; i++) {
-    document.write(`<p>${pokemonList[i].name}</p>`)
+    const pokemon = pokemonList[i];
+    let comment = pokemon.height > 1 ? '<span class="pokemon__comment">Wow! That is BIG!!!</span>' : ''; 
+    document.write(`<p class="pokemon__name">${pokemon.name} ${comment}</p>`);
 }
