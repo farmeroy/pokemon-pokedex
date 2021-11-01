@@ -3,12 +3,16 @@
 }
 
 body {
-    text-align: center;
     padding: 10%;
+    font-family:sans-serif;
 }
 
-p {
-    font-family:sans-serif;
+.pokemon__name {
     font-size: 2rem;
+}
+
+.pokemon__comment {
+    font-size: 1rem;
+    font-style: italic;
 }
 
