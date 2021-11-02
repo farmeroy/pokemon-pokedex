@@ -16,22 +16,39 @@ body {
     border-bottom: 2px solid black;
 }
 
+.display {
+    display: flex;
+    text-align: center;
+}
+
 .pokemon {
     text-align: center;
+    font-size: 2rem;
     margin: 1rem auto;
     padding: 1rem;
     background-color: white;
     border: 1px solid black;
     border-radius: 8px;
     box-shadow: 10px 5px 5px rgba(0,0,0,.4);
-    max-width: 90%;
+    width: 90%;
+
 }
 
 
 .pokemon__comment {
     font-style: italic;
 }
+.pokemon-list {
+    list-style: none;
+    margin: auto;
+    display: block;
+    flex-grow: 1;
+    
 
+}
+
+.pokemon-list__item {
+}
 
 @media screen and (min-width: 600px) {
     .pokemon {
