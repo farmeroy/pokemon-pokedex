@@ -1,3 +1,5 @@
+
+
 const pokemonRepository = (function () {
   let pokemonList = [];
 
@@ -37,8 +39,8 @@ const pokemonRepository = (function () {
 
   //search for a pokemon by name
   const find = function (name) {
-    return pokemonList.filter(function (pokemon, name) {
-      pokemon.name === name;
+    return pokemonList.filter(function (pokemon) {
+      return pokemon.name.toLowerCase() === name.toLowerCase();
     });
   };
 
