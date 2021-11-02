@@ -35,6 +35,11 @@ body {
 }
 
 
+.pokemon:hover {
+    cursor: pointer;
+    opacity: .8;
+}
+
 .pokemon__comment {
     font-style: italic;
 }
@@ -42,6 +47,7 @@ body {
     list-style: none;
     margin: auto;
     display: block;
+    padding: 0;
     flex-grow: 1;
     
 
