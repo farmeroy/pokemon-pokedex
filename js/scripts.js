@@ -22,15 +22,15 @@ const pokemonRepository = (function () {
 
   const add = function (pokemon) {
     if (
-      typeof pokemon !== Object ||
-      Object.keys(pokemon) !== ["name", "height", "types"] ||
-      typeof pokemon.types !== Array
+      typeof pokemon !== 'object' ||
+      // Object.keys(pokemon) !== ["name", "height", "types"] ||
+      typeof pokemon.types !== 'object'
     ) {
       return console.log(
         "pokemon must be an object with keys name, height, types (array)"
       );
     }
-
+    console.log(Object.keys(pokemon));
     pokemonList.push(pokemon);
   };
 
