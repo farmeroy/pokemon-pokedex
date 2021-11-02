@@ -1,5 +1,4 @@
 const pokemonRepository = (function () {
-  
   let pokemonList = [];
 
   pokemonList = [
@@ -21,16 +20,17 @@ const pokemonRepository = (function () {
   ];
 
   const add = function (pokemon) {
-    if (
-      typeof pokemon !== 'object' ||
-      // Object.keys(pokemon) !== ["name", "height", "types"] ||
-      typeof pokemon.types !== 'object'
-    ) {
+    const keys = Object.keys(pokemon);
+    if (keys[0] !== "name" || keys[1] !== "height" || keys[2] !== "types") {
       return console.log(
         "pokemon must be an object with keys name, height, types (array)"
       );
     }
-    console.log(Object.keys(pokemon));
+    if (typeof pokemon !== "object" || typeof pokemon.types !== "object") {
+      return console.log(
+        "pokemon must be an object with keys name, height, types (array)"
+      );
+    }
     pokemonList.push(pokemon);
   };
 
@@ -51,9 +51,7 @@ const pokemonRepository = (function () {
   };
 })();
 
-
 function printPokemon(pokemon) {
- 
   let comment =
     pokemon.height > 1
       ? '<p class="pokemon__comment">Wow! That is BIG!!!</p>'
