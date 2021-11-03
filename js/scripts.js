@@ -2,37 +2,9 @@ const pokemonRepository = (function () {
   let pokemonList = [];
   const apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=150";
 
-  // pokemonList = [
-  //   {
-  //     name: "Bulbasaur",
-  //     height: 0.7,
-  //     types: ["grass", "poison"],
-  //   },
-  //   {
-  //     name: "Venusaur",
-  //     height: 2,
-  //     types: ["grass", "poison"],
-  //   },
-  //   {
-  //     name: "Chinchou",
-  //     height: 0.5,
-  //     types: ["electric", "water"],
-  //   },
-  // ];
 
   const add = function (pokemon) {
     //error handling must be updated
-    // const keys = Object.keys(pokemon);
-    // if (keys[0] !== "name" || keys[1] !== "height" || keys[2] !== "types") {
-    //   return console.log(
-    //     "pokemon must be an object with keys name, height, types (array)"
-    //   );
-    // }
-    // if (typeof pokemon !== "object" || typeof pokemon.types !== "object") {
-    //   return console.log(
-    //     "pokemon must be an object with keys name, height, types (array)"
-    //   );
-    // }
     pokemonList.push(pokemon);
   };
 
@@ -64,9 +36,26 @@ const pokemonRepository = (function () {
     ulElement.appendChild(listElement);
   };
 
+  const showLoadingMsg = function() {
+    const mainEl = document.querySelector("main");
+    const loadingMsgEl = document.createElement("h2");
+    loadingMsgEl.classList.add("loading-msg");
+    loadingMsgEl.textContent = "Loading pokemon content...";
+    mainEl.appendChild(loadingMsgEl);
+  }
+
+  const hideLoadingMsg = function() {
+    const mainEl = document.querySelector("main");
+    const loadingMsgEl = document.querySelector(".loading-msg");
+    mainEl.removeChild(loadingMsgEl);
+
+  }
+
   const loadList = function () {
+    showLoadingMsg();
     return fetch(apiUrl)
       .then(function (response) {
+        hideLoadingMsg();
         return response.json();
       })
       .then(function (json) {
@@ -79,6 +68,7 @@ const pokemonRepository = (function () {
         });
       })
       .catch(function (e) {
+        hideLoadingMsg();
         console.error(e);
       });
   };
@@ -114,6 +104,7 @@ const pokemonRepository = (function () {
     find: find,
     addListItem: addListItem,
     loadList: loadList,
+    loadDetails: loadDetails
   };
 })();
 
