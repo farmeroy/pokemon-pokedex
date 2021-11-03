@@ -21,6 +21,15 @@ body {
     text-align: center;
 }
 
+.display h2 {
+    margin: auto;
+}
+
+.loading-msg {
+    margin: auto;
+    text-align: center;
+}
+
 .pokemon {
     text-align: center;
     font-size: 2rem;
