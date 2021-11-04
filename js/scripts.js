@@ -39,6 +39,8 @@ const modalTemplate = (function () {
     modal.appendChild(titleElement);
     modal.appendChild(contentElement);
     modalContainer.appendChild(modal);
+
+    // render the image conditionally -- it would be nice to add a placeholder img instead
     if (imageUrl) {
       let imageElement = document.createElement("img");
       imageElement.src = imageUrl;
@@ -139,6 +141,7 @@ const pokemonRepository = (function () {
               detailsUrl: item.url,
             };
             add(pokemon);
+            pokemon.id = pokemonList.indexOf(pokemon);
           });
         })
         .catch(function (e) {
@@ -150,6 +153,7 @@ const pokemonRepository = (function () {
 
   // access the details of the specific pokemon, called in showDetails
   const loadDetails = function (item) {
+    // show a loading modal; this prevents multiple clicks and improves UI
     modalTemplate.showModal("Loading...", "Finding your pokemon...");
     let url = item.detailsUrl;
     return fetch(url)
@@ -157,7 +161,7 @@ const pokemonRepository = (function () {
         return response.json();
       })
       .then(function (details) {
-        // Now we add the details to the item
+        // access the relevant details from the JSON response
         item.imageUrl = details.sprites.front_default;
         item.height = details.height;
         item.types = details.types;
