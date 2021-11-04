@@ -1,9 +1,20 @@
+
+// a simple function to capitalize the Pokemon names
+function toTitleCase(str) {
+  return str.replace(/\w\S*/g, function (txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
+}
+
+// IIFE containing the modal logic
 const modalTemplate = (function () {
+  // hide modal function
   function hideModal() {
     let modalContainer = document.getElementById("modal-container");
     modalContainer.classList.remove("is-visible");
   }
 
+  // show modal function, is returned by the IIFE
   function showModal(title, text, imageUrl) {
     let modalContainer = document.getElementById("modal-container");
 
@@ -23,14 +34,16 @@ const modalTemplate = (function () {
     let contentElement = document.createElement("p");
     contentElement.innerText = text;
     
-    let imageElement = document.createElement("img");
-    imageElement.src = imageUrl;
 
     modal.appendChild(closeBtn);
     modal.appendChild(titleElement);
     modal.appendChild(contentElement);
-    modal.appendChild(imageElement);
     modalContainer.appendChild(modal);
+    if (imageUrl) {
+      let imageElement = document.createElement("img");
+      imageElement.src = imageUrl;
+      modal.appendChild(imageElement);
+    }
 
     modalContainer.classList.add("is-visible");
     modalContainer.addEventListener("click", (e) => {
@@ -41,7 +54,7 @@ const modalTemplate = (function () {
         hideModal();
       }
     });
-
+    // make the modal accessable to the keyboard
     window.addEventListener("keydown", (e) => {
       let modalContainer = document.getElementById("modal-container");
       if (
@@ -57,6 +70,7 @@ const modalTemplate = (function () {
   };
 })();
 
+// creates and renders the pokemon list
 const pokemonRepository = (function () {
   let pokemonList = [];
   const apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=150";
@@ -108,30 +122,35 @@ const pokemonRepository = (function () {
     mainEl.removeChild(loadingMsgEl);
   };
 
+  // fetch the pokemon list from the API
   const loadList = function () {
     showLoadingMsg();
-    return fetch(apiUrl)
-      .then(function (response) {
-        hideLoadingMsg();
-        return response.json();
-      })
-      .then(function (json) {
-        json.results.forEach(function (item) {
-          let pokemon = {
-            name: item.name,
-            detailsUrl: item.url,
-          };
-          add(pokemon);
-        });
-      })
-      .catch(function (e) {
-        hideLoadingMsg();
-        console.error(e);
-      });
+    return (
+      fetch(apiUrl)
+        .then(function (response) {
+          hideLoadingMsg();
+          return response.json();
+        })
+        // loop through the response and add each item to the repository
+        .then(function (json) {
+          json.results.forEach(function (item) {
+            let pokemon = {
+              name: toTitleCase(item.name),
+              detailsUrl: item.url,
+            };
+            add(pokemon);
+          });
+        })
+        .catch(function (e) {
+          hideLoadingMsg();
+          console.error(e);
+        })
+    );
   };
 
   // access the details of the specific pokemon, called in showDetails
   const loadDetails = function (item) {
+    modalTemplate.showModal("Loading...", "Finding your pokemon...");
     let url = item.detailsUrl;
     return fetch(url)
       .then(function (response) {
@@ -148,12 +167,16 @@ const pokemonRepository = (function () {
       });
   };
 
-  // log a pokemon's name to the console
+  // loadsDetails and renders the pokemon to the modal element
   const showDetails = function (pokemon) {
     loadDetails(pokemon).then(function () {
       console.log(pokemon);
       // show the details in the modal
-      modalTemplate.showModal(pokemon.name, `Height: ${pokemon.height}`, pokemon.imageUrl);
+      modalTemplate.showModal(
+        pokemon.name,
+        `Height: ${pokemon.height}m`,
+        pokemon.imageUrl
+      );
     });
   };
 
@@ -167,6 +190,7 @@ const pokemonRepository = (function () {
   };
 })();
 
+// innitiate the app
 pokemonRepository.loadList().then(function () {
   // Now the data is loaded!
   pokemonRepository.getAll().forEach(function (pokemon) {
