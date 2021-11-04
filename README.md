@@ -1,3 +1,6 @@
-**Simple JS App**
+#Pokemon Pokedex App
 
-This is an app in progress. Eventually, it will fetch data from an API and allow the user to see and search through that data.
+This app was written with vanilla Javascript.
+It sends a Http request to a pokemon API and renders the results.
+You can click on the names of the pokemon to see more information as well as a photo of the pokemon.
+You can scroll through the images of the pokemon in the detailed modal views. 
