@@ -18,6 +18,10 @@ body {
 }
 
 .app__header {
+    position: -webkit-sticky;
+    position: sticky;
+    background-color: var(--dark-purple);
+    top: 0px;
     font-size: 3rem;
     margin:auto;
     color: var(--peach);
