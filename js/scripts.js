@@ -4,7 +4,7 @@ const modalTemplate = (function () {
     modalContainer.classList.remove("is-visible");
   }
 
-  function showModal(title, text) {
+  function showModal(title, text, imageUrl) {
     let modalContainer = document.getElementById("modal-container");
 
     // clear existing modal content
@@ -22,10 +22,14 @@ const modalTemplate = (function () {
 
     let contentElement = document.createElement("p");
     contentElement.innerText = text;
+    
+    let imageElement = document.createElement("img");
+    imageElement.src = imageUrl;
 
     modal.appendChild(closeBtn);
     modal.appendChild(titleElement);
     modal.appendChild(contentElement);
+    modal.appendChild(imageElement);
     modalContainer.appendChild(modal);
 
     modalContainer.classList.add("is-visible");
@@ -148,7 +152,8 @@ const pokemonRepository = (function () {
   const showDetails = function (pokemon) {
     loadDetails(pokemon).then(function () {
       console.log(pokemon);
-      modalTemplate.showModal(pokemon.name, pokemon.imageUrl);
+      // show the details in the modal
+      modalTemplate.showModal(pokemon.name, `Height: ${pokemon.height}`, pokemon.imageUrl);
     });
   };
 
