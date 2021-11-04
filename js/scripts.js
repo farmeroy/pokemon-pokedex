@@ -141,6 +141,7 @@ const pokemonRepository = (function () {
               detailsUrl: item.url,
             };
             add(pokemon);
+            // add an id property that is equivelant to the index of the pokemon
             pokemon.id = pokemonList.indexOf(pokemon);
           });
         })
