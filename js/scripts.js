@@ -38,6 +38,7 @@ const modalTemplate = (function () {
     modal.appendChild(titleElement);
     modal.appendChild(contentElement);
     modalContainer.appendChild(modal);
+    modal.focus();
 
     // render the image conditionally -- it would be nice to add a placeholder img instead
     if (imageUrl) {
@@ -45,16 +46,19 @@ const modalTemplate = (function () {
       imageElement.src = imageUrl;
       modal.appendChild(imageElement);
     }
-    // adds the next pokemon functionality, but not if the modal is just a loading message
+    // allow for scrolling through the next and previous pokemons, but not if the modal is just a loading message
     if (typeof id === "number") {
+      const btnContainer = document.createElement('div');
+      btnContainer.classList.add('prev-next-btn-container');
       const nextBtn = document.createElement('button');
       const prevBtn = document.createElement('button');
       nextBtn.innerText = 'Next =>';
       prevBtn.innerText = '<= Previous';
       nextBtn.addEventListener("click", nextModal.bind(null, id));
       prevBtn.addEventListener('click', prevModal.bind(null, id));
-      modal.appendChild(prevBtn);
-      modal.appendChild(nextBtn);
+      modal.appendChild(btnContainer);
+      btnContainer.appendChild(prevBtn);
+      btnContainer.appendChild(nextBtn);
     }
 
     modalContainer.classList.add("is-visible");
