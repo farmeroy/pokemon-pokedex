@@ -15,8 +15,9 @@ const modalTemplate = (function () {
   }
 
   // show modal function, is returned by the IIFE
-  function showModal(title, text, imageUrl) {
+  function showModal(title, text, imageUrl, id, nextModal) {
     let modalContainer = document.getElementById("modal-container");
+    console.log(id)
 
     // clear existing modal content
     modalContainer.innerHTML = "";
@@ -45,6 +46,10 @@ const modalTemplate = (function () {
       let imageElement = document.createElement("img");
       imageElement.src = imageUrl;
       modal.appendChild(imageElement);
+    }
+
+    if (typeof id === 'number') {
+      modal.addEventListener('click', nextModal.bind(null, id))
     }
 
     modalContainer.classList.add("is-visible");
@@ -155,7 +160,7 @@ const pokemonRepository = (function () {
   // access the details of the specific pokemon, called in showDetails
   const loadDetails = function (item) {
     // show a loading modal; this prevents multiple clicks and improves UI
-    modalTemplate.showModal("Loading...", "Finding your pokemon...");
+    modalTemplate.showModal("Loading...", "Finding your pokemon...", null, null);
     let url = item.detailsUrl;
     return fetch(url)
       .then(function (response) {
@@ -172,6 +177,14 @@ const pokemonRepository = (function () {
       });
   };
 
+  const getNextPokemon = function(currId) {
+    if (currId + 1 < pokemonList.length) {
+      showDetails(pokemonList[currId + 1])
+    } else {
+      showDetails(pokemonList[0]);
+    }
+  }
+
   // loadsDetails and renders the pokemon to the modal element
   const showDetails = function (pokemon) {
     loadDetails(pokemon).then(function () {
@@ -180,7 +193,9 @@ const pokemonRepository = (function () {
       modalTemplate.showModal(
         pokemon.name,
         `Height: ${pokemon.height}m`,
-        pokemon.imageUrl
+        pokemon.imageUrl,
+        pokemon.id,
+        getNextPokemon
       );
     });
   };
