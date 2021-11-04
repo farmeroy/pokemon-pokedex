@@ -16,8 +16,6 @@ const modalTemplate = (function () {
   // show modal function, is returned by the IIFE
   function showModal(title, text, imageUrl, id, nextModal, prevModal) {
     let modalContainer = document.getElementById("modal-container");
-    console.log(id);
-
     // clear existing modal content
     modalContainer.innerHTML = "";
     // write new content
@@ -209,7 +207,6 @@ const pokemonRepository = (function () {
   // loadsDetails and renders the pokemon to the modal element
   const showDetails = function (pokemon) {
     loadDetails(pokemon).then(function () {
-      console.log(pokemon);
       // show the details in the modal
       modalTemplate.showModal(
         pokemon.name,
