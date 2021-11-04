@@ -1,7 +1,61 @@
+const modalTemplate = (function () {
+  function hideModal() {
+    let modalContainer = document.getElementById("modal-container");
+    modalContainer.classList.remove("is-visible");
+  }
+
+  function showModal(title, text) {
+    let modalContainer = document.getElementById("modal-container");
+
+    // clear existing modal content
+    modalContainer.innerHTML = "";
+    // write new content
+    let modal = document.createElement("div");
+    modal.classList.add("modal");
+    let closeBtn = document.createElement("button");
+    closeBtn.classList.add("modal-close");
+    closeBtn.innerText = "Close";
+    closeBtn.addEventListener("click", hideModal);
+
+    let titleElement = document.createElement("h1");
+    titleElement.innerText = title;
+
+    let contentElement = document.createElement("p");
+    contentElement.innerText = text;
+
+    modal.appendChild(closeBtn);
+    modal.appendChild(titleElement);
+    modal.appendChild(contentElement);
+    modalContainer.appendChild(modal);
+
+    modalContainer.classList.add("is-visible");
+    modalContainer.addEventListener("click", (e) => {
+      // Since this is also triggered when clicking INSIDE the modal
+      // We only want to close if the user clicks directly on the overlay
+      let target = e.target;
+      if (target === modalContainer) {
+        hideModal();
+      }
+    });
+
+    window.addEventListener("keydown", (e) => {
+      let modalContainer = document.getElementById("modal-container");
+      if (
+        e.key === "Escape" &&
+        modalContainer.classList.contains("is-visible")
+      ) {
+        hideModal();
+      }
+    });
+  }
+  return {
+    showModal: showModal,
+  };
+})();
+
 const pokemonRepository = (function () {
   let pokemonList = [];
   const apiUrl = "https://pokeapi.co/api/v2/pokemon/?limit=150";
-
 
   const add = function (pokemon) {
     //error handling must be updated
@@ -36,20 +90,19 @@ const pokemonRepository = (function () {
     ulElement.appendChild(listElement);
   };
 
-  const showLoadingMsg = function() {
+  const showLoadingMsg = function () {
     const mainEl = document.querySelector("main");
     const loadingMsgEl = document.createElement("h2");
     loadingMsgEl.classList.add("loading-msg");
     loadingMsgEl.textContent = "Loading pokemon content...";
     mainEl.appendChild(loadingMsgEl);
-  }
+  };
 
-  const hideLoadingMsg = function() {
+  const hideLoadingMsg = function () {
     const mainEl = document.querySelector("main");
     const loadingMsgEl = document.querySelector(".loading-msg");
     mainEl.removeChild(loadingMsgEl);
-
-  }
+  };
 
   const loadList = function () {
     showLoadingMsg();
@@ -95,6 +148,7 @@ const pokemonRepository = (function () {
   const showDetails = function (pokemon) {
     loadDetails(pokemon).then(function () {
       console.log(pokemon);
+      modalTemplate.showModal(pokemon.name, pokemon.imageUrl);
     });
   };
 
@@ -104,7 +158,7 @@ const pokemonRepository = (function () {
     find: find,
     addListItem: addListItem,
     loadList: loadList,
-    loadDetails: loadDetails
+    loadDetails: loadDetails,
   };
 })();
 
