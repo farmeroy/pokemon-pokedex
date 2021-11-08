@@ -120,10 +120,14 @@ const pokemonRepository = (function () {
     pokemonButton.innerText = pokemon.name;
     pokemonButton.addEventListener("click", showDetails.bind(null, pokemon));
 
-    pokemonButton.classList.add("btn")
-    pokemonButton.classList.add("btn-outline-primary");
-    pokemonButton.classList.add("btn-block")
-    listElement.classList.add("list-item");
+    pokemonButton.classList.add(
+      "btn",
+      "btn-outline-primary",
+      "btn-block",
+      "list-item",
+      "m-1"
+    );
+  
 
 
     listElement.appendChild(pokemonButton);
