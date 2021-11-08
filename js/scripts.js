@@ -32,14 +32,19 @@ const modalTemplate = (function () {
     let contentElement = document.createElement("p");
     contentElement.innerText = text;
 
+    let placeHolderDiv = document.createElement("div");
+    placeHolderDiv.classList.add('place-holder');
+
     modal.appendChild(closeBtn);
     modal.appendChild(titleElement);
     modal.appendChild(contentElement);
+    modal.appendChild(placeHolderDiv);
     modalContainer.appendChild(modal);
     modal.focus();
 
     // render the image conditionally -- it would be nice to add a placeholder img instead
     if (imageUrl) {
+      modal.removeChild(placeHolderDiv);
       let imageElement = document.createElement("img");
       imageElement.src = imageUrl;
       modal.appendChild(imageElement);
@@ -108,15 +113,18 @@ const pokemonRepository = (function () {
 
   //renders a pokemon object to the DOM
   const addListItem = function (pokemon) {
-    const ulElement = document.querySelector(".pokemon-list");
+    const ulElement = document.getElementById("pokemon-list");
     const listElement = document.createElement("li");
     const pokemonButton = document.createElement("button");
 
     pokemonButton.innerText = pokemon.name;
     pokemonButton.addEventListener("click", showDetails.bind(null, pokemon));
 
-    pokemonButton.classList.add("pokemon");
-    listElement.classList.add("pokemon-list__item");
+    pokemonButton.classList.add("btn")
+    pokemonButton.classList.add("btn-outline-primary");
+    pokemonButton.classList.add("btn-block")
+    listElement.classList.add("list-item");
+
 
     listElement.appendChild(pokemonButton);
     ulElement.appendChild(listElement);
