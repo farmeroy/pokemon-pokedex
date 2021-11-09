@@ -58,7 +58,8 @@ const pokemonRepository = (function () {
       "btn-block",
       "list-group-item",
       "list-group-item-action",
-      "m-1"
+      "m-1",
+      "pokemon-btn"
     );
     // set up modal btn functionality
     pokemonButton.setAttribute("data-toggle", "modal");
