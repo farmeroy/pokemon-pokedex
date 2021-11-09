@@ -33,7 +33,7 @@ const modalTemplate = (function () {
     contentElement.innerText = text;
 
     let placeHolderDiv = document.createElement("div");
-    placeHolderDiv.classList.add('place-holder');
+    placeHolderDiv.classList.add("place-holder");
 
     modal.appendChild(closeBtn);
     modal.appendChild(titleElement);
@@ -51,14 +51,14 @@ const modalTemplate = (function () {
     }
     // allow for scrolling through the next and previous pokemons, but not if the modal is just a loading message
     if (typeof id === "number") {
-      const btnContainer = document.createElement('div');
-      btnContainer.classList.add('prev-next-btn-container');
-      const nextBtn = document.createElement('button');
-      const prevBtn = document.createElement('button');
-      nextBtn.innerText = 'Next =>';
-      prevBtn.innerText = '<= Previous';
+      const btnContainer = document.createElement("div");
+      btnContainer.classList.add("prev-next-btn-container");
+      const nextBtn = document.createElement("button");
+      const prevBtn = document.createElement("button");
+      nextBtn.innerText = "Next =>";
+      prevBtn.innerText = "<= Previous";
       nextBtn.addEventListener("click", nextModal.bind(null, id));
-      prevBtn.addEventListener('click', prevModal.bind(null, id));
+      prevBtn.addEventListener("click", prevModal.bind(null, id));
       modal.appendChild(btnContainer);
       btnContainer.appendChild(prevBtn);
       btnContainer.appendChild(nextBtn);
@@ -118,7 +118,6 @@ const pokemonRepository = (function () {
     const pokemonButton = document.createElement("button");
 
     pokemonButton.innerText = pokemon.name;
-    pokemonButton.addEventListener("click", showDetails.bind(null, pokemon));
     // Style the pokemon button
     pokemonButton.classList.add(
       "btn",
@@ -128,8 +127,10 @@ const pokemonRepository = (function () {
       "list-group-item-action",
       "m-1"
     );
-  
-
+    // set up modal btn functionality
+    pokemonButton.setAttribute("data-toggle", "modal");
+    pokemonButton.setAttribute("data-target", "#pokemon-details");
+    pokemonButton.addEventListener("click", showDetails.bind(null, pokemon));
 
     listElement.appendChild(pokemonButton);
     ulElement.appendChild(listElement);
@@ -178,14 +179,14 @@ const pokemonRepository = (function () {
   };
 
   // access the details of the specific pokemon, called in showDetails
+
+  // show a loading modal; this prevents multiple clicks and improves UI
   const loadDetails = function (item) {
-    // show a loading modal; this prevents multiple clicks and improves UI
-    modalTemplate.showModal(
-      "Loading...",
-      "Finding your pokemon...",
-      null,
-      null
-    );
+    const modalTitle = document.querySelector(".modal-title");
+    modalTitle.innerText = "Loading...";
+    // clear the previous modal
+    const modalBody = document.querySelector(".modal-body");
+    modalBody.innerText = "Searching for your pokemon...";
     let url = item.detailsUrl;
     return fetch(url)
       .then(function (response) {
@@ -220,15 +221,31 @@ const pokemonRepository = (function () {
   // loadsDetails and renders the pokemon to the modal element
   const showDetails = function (pokemon) {
     loadDetails(pokemon).then(function () {
-      // show the details in the modal
-      modalTemplate.showModal(
-        pokemon.name,
-        `Height: ${pokemon.height}m`,
-        pokemon.imageUrl,
-        pokemon.id,
-        getNextPokemon,
-        getPreviousPokemon
-      );
+      // access the modal element
+      const modal = document.querySelector(".modal-content");
+      const modalBody = document.querySelector(".modal-body");
+      // clear the loadign dialog
+      modalBody.innerText = '';
+      // name the pokemon
+      const modalTitle = modal.querySelector(".modal-title");
+      modalTitle.innerText = pokemon.name;
+      // set the image
+      const pokemonImage = document.createElement("img");
+      pokemonImage.setAttribute("src", pokemon.imageUrl);
+      modalBody.appendChild(pokemonImage);
+      // pokemone deatail text 
+      const modalText = document.createElement("p");
+      modalText.innerText = `Height: ${pokemon.height}m`;
+      modalBody.appendChild(modalText);
+
+      // modalTemplate.showModal(
+      //   pokemon.name,
+      //   `Height: ${pokemon.height}m`,
+      //   pokemon.imageUrl,
+      //   pokemon.id,
+      //   getNextPokemon,
+      //   getPreviousPokemon
+      // );
     });
   };
 
