@@ -4,6 +4,11 @@ function toTitleCase(str) {
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
   });
 }
+function filterItems(arr, query) {
+  return arr.filter(function (el) {
+    return el.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+  });
+}
 
 
 // creates and renders the pokemon list
@@ -17,10 +22,25 @@ const pokemonRepository = (function () {
   };
 
   //search for a pokemon by name
-  const find = function (name) {
-    return pokemonList.filter(function (pokemon) {
-      return pokemon.name.toLowerCase() === name.toLowerCase();
-    });
+  const searchBtnHandler = function (event) {
+    event.preventDefault()
+      const modalBody = document.querySelector(".modal-body");
+      modalBody.innerText = "";
+    const searchEl = document.getElementById('search-field');
+    const query = searchEl.value;
+    const searchResult = pokemonList.find( ({ name }) => name === toTitleCase(query));
+    const modal = document.getElementById("pokemon-details");
+    if (searchResult) {
+      console.log(searchResult.id)
+      $('#pokemon-details').modal("show");
+      showDetails(pokemonList[searchResult.id])
+    } else {
+      // add error handling
+      $("#pokemon-details").modal("show");
+      const modalTitle = modal.querySelector('.modal-title');
+      modalTitle.innerText = `Can't find a pokemon named ${query}`;
+
+    }
   };
 
   //returns a list of all the pokemon
@@ -97,9 +117,9 @@ const pokemonRepository = (function () {
 
   // access the details of the specific pokemon, called in showDetails
 
-  // show a loading modal; this prevents multiple clicks and improves UI
   const loadDetails = function (item) {
     const modalTitle = document.querySelector(".modal-title");
+    // show a loading modal; this prevents multiple clicks and improves UI
     modalTitle.innerText = "Loading...";
     // clear the previous modal
     const modalBody = document.querySelector(".modal-body");
@@ -154,6 +174,7 @@ const pokemonRepository = (function () {
       // set the image
       const pokemonImage = document.createElement("img");
       pokemonImage.setAttribute("src", pokemon.imageUrl);
+      pokemonImage.classList.add('mx-auto', 'mw-100')
       modalBody.appendChild(pokemonImage);
       // pokemone deatail text
       const modalText = document.createElement("p");
@@ -168,6 +189,9 @@ const pokemonRepository = (function () {
 
   const prevBtn = document.getElementById("prev-btn");
   prevBtn.addEventListener("click", getPreviousPokemon);
+
+  const searchBtn = document.getElementById("pokemon-search");
+  searchBtn.addEventListener('submit', searchBtnHandler)
 
   return {
     getAll: getAll,
