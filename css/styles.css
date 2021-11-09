@@ -23,13 +23,18 @@ body {
   background-color: #d6c8ff;
 }
 
+.pokemon-img {
+  max-width: 100%;
+}
+
 
 .modal-content {
   background-color: var(--green);
+  border-radius: 8px;
 }
 
-.bg-light {
-  background-color: var(--yellow);
+.navbar {
+  background-color: var(--green);
 }
 
 
@@ -44,3 +49,4 @@ body {
   padding: 2rem;
   border-radius: 8px;
 }
+
