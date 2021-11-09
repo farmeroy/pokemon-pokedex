@@ -1,0 +1,46 @@
+:root {
+  --yellow: #FCFFA6;
+  --green: #C1FFD7;
+  --blue: #B5DEFF;
+  --purple: #CAB8FF;
+}
+
+body {
+  background-color: var(--blue);
+  background-image: url('../assets/pokemon-group-img.gif');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.pokemon-btn {
+  background-color: var(--purple);
+  font-size: 1.2rem;
+}
+
+.pokemon-btn:hover, .pokemon-btn:focus {
+  background-color: #d6c8ff;
+}
+
+
+.modal-content {
+  background-color: var(--green);
+}
+
+.bg-light {
+  background-color: var(--yellow);
+}
+
+
+#prev-btn, #next-btn {
+  background-color: var(--purple);
+  color:rgb(54, 54, 54);
+}
+
+
+#pokemon-list {
+  background-color: rgba(252, 255, 166, .5);
+  padding: 2rem;
+  border-radius: 8px;
+}
