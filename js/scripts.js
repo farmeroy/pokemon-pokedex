@@ -5,7 +5,6 @@ function toTitleCase(str) {
   });
 }
 
-
 // creates and renders the pokemon list
 const pokemonRepository = (function () {
   let pokemonList = [];
@@ -18,25 +17,32 @@ const pokemonRepository = (function () {
 
   //search for a pokemon by name
   const searchBtnHandler = function (event) {
-    event.preventDefault()
-      const modalBody = document.querySelector(".modal-body");
-      modalBody.innerText = "";
-    const searchEl = document.getElementById('search-field');
+    event.preventDefault();
+    const searchEl = document.getElementById("search-field");
+
     const query = searchEl.value;
-    const searchResult = pokemonList.find( ({ name }) => name === toTitleCase(query));
+    if (!query) {
+      return;
+    }
+    const modalBody = document.querySelector(".modal-body");
+    modalBody.innerText = "";
+
+    const searchResult = pokemonList.find(
+      ({ name }) => name === toTitleCase(query)
+    );
     const modal = document.getElementById("pokemon-details");
     if (searchResult) {
-      console.log(searchResult.id)
-      $('#pokemon-details').modal("show");
-      showDetails(pokemonList[searchResult.id])
+      console.log(searchResult.id);
+      $("#pokemon-details").modal("show");
+      showDetails(pokemonList[searchResult.id]);
     } else {
       // add error handling
       $("#pokemon-details").modal("show");
-      const modalTitle = modal.querySelector('.modal-title');
+      const modalTitle = modal.querySelector(".modal-title");
       modalTitle.innerText = `Can't find a pokemon named ${query}`;
     }
     //clear the search field
-    searchEl.value = '';
+    searchEl.value = "";
   };
 
   //returns a list of all the pokemon
@@ -137,10 +143,9 @@ const pokemonRepository = (function () {
       });
   };
 
-
   // next pokemon
   const getNextPokemon = function () {
-    const modal = document.querySelector('.modal-content');
+    const modal = document.querySelector(".modal-content");
     const currId = +modal.dataset.pokemonIndex;
     if (currId + 1 < pokemonList.length) {
       showDetails(pokemonList[currId + 1]);
@@ -151,8 +156,8 @@ const pokemonRepository = (function () {
 
   // previous pokemon
   const getPreviousPokemon = function () {
-        const modal = document.querySelector(".modal-content");
-        const currId = +modal.dataset.pokemonIndex;
+    const modal = document.querySelector(".modal-content");
+    const currId = +modal.dataset.pokemonIndex;
     if (currId - 1 > -1) {
       showDetails(pokemonList[currId - 1]);
     } else {
@@ -175,7 +180,7 @@ const pokemonRepository = (function () {
       // set the image
       const pokemonImage = document.createElement("img");
       pokemonImage.setAttribute("src", pokemon.imageUrl);
-      pokemonImage.classList.add('mx-auto', 'mw-100')
+      pokemonImage.classList.add("mx-auto", "mw-100", "pokemon-img");
       modalBody.appendChild(pokemonImage);
       // pokemone deatail text
       const modalText = document.createElement("p");
@@ -192,7 +197,7 @@ const pokemonRepository = (function () {
   prevBtn.addEventListener("click", getPreviousPokemon);
 
   const searchBtn = document.getElementById("pokemon-search");
-  searchBtn.addEventListener('submit', searchBtnHandler)
+  searchBtn.addEventListener("submit", searchBtnHandler);
 
   return {
     getAll: getAll,
