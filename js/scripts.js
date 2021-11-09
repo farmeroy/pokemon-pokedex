@@ -34,8 +34,9 @@ const pokemonRepository = (function () {
       $("#pokemon-details").modal("show");
       const modalTitle = modal.querySelector('.modal-title');
       modalTitle.innerText = `Can't find a pokemon named ${query}`;
-
     }
+    //clear the search field
+    searchEl.value = '';
   };
 
   //returns a list of all the pokemon
@@ -135,6 +136,8 @@ const pokemonRepository = (function () {
       });
   };
 
+
+  // next pokemon
   const getNextPokemon = function () {
     const modal = document.querySelector('.modal-content');
     const currId = +modal.dataset.pokemonIndex;
@@ -144,6 +147,8 @@ const pokemonRepository = (function () {
       showDetails(pokemonList[0]);
     }
   };
+
+  // previous pokemon
   const getPreviousPokemon = function () {
         const modal = document.querySelector(".modal-content");
         const currId = +modal.dataset.pokemonIndex;
@@ -191,7 +196,6 @@ const pokemonRepository = (function () {
   return {
     getAll: getAll,
     add: add,
-    find: find,
     addListItem: addListItem,
     loadList: loadList,
     loadDetails: loadDetails,
