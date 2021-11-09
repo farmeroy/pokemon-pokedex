@@ -4,11 +4,6 @@ function toTitleCase(str) {
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
   });
 }
-function filterItems(arr, query) {
-  return arr.filter(function (el) {
-    return el.toLowerCase().indexOf(query.toLowerCase()) !== -1;
-  });
-}
 
 
 // creates and renders the pokemon list
