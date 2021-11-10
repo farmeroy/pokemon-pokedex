@@ -79,17 +79,17 @@ const pokemonRepository = (function () {
   };
 
   const showLoadingMsg = function () {
-    const mainEl = document.querySelector('main');
+    const pokeList = document.getElementById('pokemon-list');
     const loadingMsgEl = document.createElement('h2');
     loadingMsgEl.classList.add('loading-msg');
     loadingMsgEl.textContent = 'Loading pokemon content...';
-    mainEl.appendChild(loadingMsgEl);
+    pokeList.appendChild(loadingMsgEl);
   };
 
   const hideLoadingMsg = function () {
-    const mainEl = document.querySelector('main');
+    const pokeList = document.getElementById('pokemon-list');
     const loadingMsgEl = document.querySelector('.loading-msg');
-    mainEl.removeChild(loadingMsgEl);
+    pokeList.removeChild(loadingMsgEl);
   };
 
   // fetch the pokemon list from the API
