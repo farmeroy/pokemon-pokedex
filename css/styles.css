@@ -43,10 +43,17 @@ body {
   color:rgb(54, 54, 54);
 }
 
+li {
+  background-color: rgba(252, 255, 166, .5);
+  margin:0;
+  padding: .5rem;
+
+}
 
 #pokemon-list {
-  background-color: rgba(252, 255, 166, .5);
   padding: 2rem;
   border-radius: 8px;
+  list-style: none;
+  margin: auto;
 }
 
