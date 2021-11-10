@@ -17,14 +17,14 @@ const pokemonRepository = (function () {
 
   // search filter
   const searchPokemonHandler = function (event) {
-    const pokemonListItems = document.querySelectorAll('.pokemon-btn');
+    const pokemonListItems = document.querySelectorAll('li');
     const query = event.target.value.toLowerCase();
     console.log(query)
     pokemonListItems.forEach( function(item) {
-      if (item.innerText.indexOf(query) >= 0) {
+      if (item.innerText.toLowerCase().indexOf(query) >= 0) {
         item.style.display = 'block';
       } else {
-        item.style.display = 'none'
+        item.style.display = 'none';
       }
     });
   };
@@ -39,6 +39,11 @@ const pokemonRepository = (function () {
   const addListItem = function (pokemon) {
     const ulElement = document.getElementById('pokemon-list');
     const listElement = document.createElement('li');
+    listElement.classList.add(
+      'col-md-5',
+      'col-sm-12'
+    );
+
     const pokemonButton = document.createElement('button');
 
     pokemonButton.innerText = pokemon.name;
@@ -49,7 +54,6 @@ const pokemonRepository = (function () {
       'btn-block',
       'list-group-item',
       'list-group-item-action',
-      'm-1',
       'pokemon-btn'
     );
     // set up modal btn functionality
