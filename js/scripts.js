@@ -15,37 +15,20 @@ const pokemonRepository = (function () {
     pokemonList.push(pokemon);
   };
 
-  //search for a pokemon by name
-  const searchBtnHandler = function (event) {
-    event.preventDefault();
-    const searchEl = document.getElementById('search-field');
-
-    const query = searchEl.value;
-    if (!query) {
-      return;
-    }
-    const modalBody = document.querySelector('.modal-body');
-    modalBody.innerText = '';
-
-    const searchResult = pokemonList.find(
-      ({ name }) => name === toTitleCase(query)
-    );
-    const modal = document.getElementById('pokemon-details');
-    if (searchResult) {
-      console.log(searchResult.id);
-      // eslint-disable-next-line no-undef
-      $('#pokemon-details').modal('show');
-      showDetails(pokemonList[searchResult.id]);
-    } else {
-      // add error handling
-      // eslint-disable-next-line no-undef
-      $('#pokemon-details').modal('show');
-      const modalTitle = modal.querySelector('.modal-title');
-      modalTitle.innerText = `Can't find a pokemon named ${query}`;
-    }
-    //clear the search field
-    searchEl.value = '';
+  // search filter
+  const searchPokemonHandler = function (event) {
+    const pokemonListItems = document.querySelectorAll('.pokemon-btn');
+    const query = event.target.value.toLowerCase();
+    console.log(query)
+    pokemonListItems.forEach( function(item) {
+      if (item.innerText.indexOf(query) >= 0) {
+        item.style.display = 'block';
+      } else {
+        item.style.display = 'none'
+      }
+    });
   };
+
 
   //returns a list of all the pokemon
   const getAll = function () {
@@ -198,8 +181,9 @@ const pokemonRepository = (function () {
   const prevBtn = document.getElementById('prev-btn');
   prevBtn.addEventListener('click', getPreviousPokemon);
 
-  const searchBtn = document.getElementById('pokemon-search');
-  searchBtn.addEventListener('submit', searchBtnHandler);
+  //listen to the search input
+  const searchField = document.getElementById('search-field');
+  searchField.addEventListener('input', searchPokemonHandler);
 
   return {
     getAll: getAll,
