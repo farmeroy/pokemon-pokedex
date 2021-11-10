@@ -15,3 +15,5 @@ Basic styling is done with Bootstrap 4 (with additional custom CSS styling).
 The code is written in Javascript ES6 and linted with ESLint. 
 
 Fetch and Promise pollyfills are used for cross-browser support.
+
+The background image is from [PCGames](https://www.pcgamesn.com/pokemon-pc-game).
