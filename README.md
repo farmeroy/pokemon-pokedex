@@ -1,6 +1,6 @@
 <h1>Pokemon Pokedex App</h1>
 
-View deployment here https://farmeroy.github.io/simple-js-app/
+View deployment https://farmeroy.github.io/pokemon-pokedex/
 
 
 This is a simple app that fetches JSON data from a rest API and renders with UI elements.
